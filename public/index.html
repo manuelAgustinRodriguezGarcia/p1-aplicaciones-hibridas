@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tomi Manu Movies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-50">
+    <header class="border-b border-slate-800 bg-slate-900">
+        <nav class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4">
+            <a href="/" class="text-lg font-semibold text-amber-500">Tomi Manu Movies</a>
+            <div class="flex flex-wrap gap-4 text-sm text-slate-300">
+                <a href="/" class="hover:text-amber-400">Inicio</a>
+                <a href="/peliculas" class="hover:text-amber-400">Películas</a>
+                <a href="/peliculas/nueva" class="hover:text-amber-400">Agregar</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="border-b border-slate-800 bg-slate-900">
+            <div class="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-16 lg:flex-row lg:items-center lg:justify-between">
+                <div class="max-w-2xl">
+                    <p class="mb-3 text-sm uppercase tracking-[0.2em] text-amber-500">Tomi Manu Movies</p>
+                    <h1 class="text-3xl font-semibold text-slate-50 sm:text-5xl">Tu próxima película te está esperando.</h1>
+                    <p class="mt-4 text-slate-400">Explorá nuestro catálogo de películas por género, año y director.</p>
+                    <div class="mt-8 flex flex-wrap gap-3">
+                        <a href="/peliculas" class="rounded-lg bg-amber-500 px-4 py-2 font-medium text-slate-950 hover:bg-amber-400">Explorar películas</a>
+                        <a href="/peliculas/genero/accion" class="rounded-lg border border-slate-700 px-4 py-2 text-slate-300 hover:text-amber-400">Ver por género</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mx-auto max-w-7xl px-4 py-12">
+            <h2 class="text-2xl font-semibold text-slate-50">Explorar por género</h2>
+            <p class="mt-2 text-slate-400">Cinco secciones dinámicas del catálogo.</p>
+            <div class="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+                <a href="/peliculas/genero/accion" class="rounded-xl border border-slate-800 bg-slate-900 p-6 transition hover:border-amber-500">
+                    <h3 class="text-lg font-semibold text-amber-500">Acción</h3>
+                    <p class="mt-2 text-sm text-slate-400">Ver películas</p>
+                </a>
+                <a href="/peliculas/genero/comedia" class="rounded-xl border border-slate-800 bg-slate-900 p-6 transition hover:border-amber-500">
+                    <h3 class="text-lg font-semibold text-amber-500">Comedia</h3>
+                    <p class="mt-2 text-sm text-slate-400">Ver películas</p>
+                </a>
+                <a href="/peliculas/genero/drama" class="rounded-xl border border-slate-800 bg-slate-900 p-6 transition hover:border-amber-500">
+                    <h3 class="text-lg font-semibold text-amber-500">Drama</h3>
+                    <p class="mt-2 text-sm text-slate-400">Ver películas</p>
+                </a>
+                <a href="/peliculas/genero/terror" class="rounded-xl border border-slate-800 bg-slate-900 p-6 transition hover:border-amber-500">
+                    <h3 class="text-lg font-semibold text-amber-500">Terror</h3>
+                    <p class="mt-2 text-sm text-slate-400">Ver películas</p>
+                </a>
+                <a href="/peliculas/genero/ciencia-ficcion" class="rounded-xl border border-slate-800 bg-slate-900 p-6 transition hover:border-amber-500">
+                    <h3 class="text-lg font-semibold text-amber-500">Ciencia ficción</h3>
+                    <p class="mt-2 text-sm text-slate-400">Ver películas</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-slate-800 bg-slate-900">
+        <div class="mx-auto max-w-7xl px-4 py-6 text-sm text-slate-400">Tomi Manu Movies</div>
+    </footer>
+</body>
+</html>

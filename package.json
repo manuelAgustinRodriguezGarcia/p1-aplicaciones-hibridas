@@ -1,0 +1,21 @@
+{
+  "name": "tomi-manu-movies",
+  "version": "1.0.0",
+  "description": "Catalogo web de peliculas",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon main.js",
+    "start": "node main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongodb": "^7.6.0"
+  }
+}
