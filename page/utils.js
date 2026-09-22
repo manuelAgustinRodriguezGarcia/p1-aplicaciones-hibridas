@@ -11,6 +11,7 @@ export function createPage(title, content) {
     html += "<div class=\"flex flex-wrap gap-4 text-sm text-slate-300\">"
     html += "<a href=\"/\" class=\"hover:text-amber-400\">Inicio</a>"
     html += "<a href=\"/peliculas\" class=\"hover:text-amber-400\">Películas</a>"
+    html += "<a href=\"/directores\" class=\"hover:text-amber-400\">Directores</a>"
     html += "<a href=\"/peliculas/nueva\" class=\"hover:text-amber-400\">Agregar</a>"
     html += "</div></nav></header>"
     html += "<main class=\"mx-auto max-w-7xl px-4 py-8\">"
