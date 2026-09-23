@@ -127,8 +127,10 @@ export function listaPeliculasPorGenero(peliculas, genero) {
     html += `<h1 class="text-3xl font-semibold text-slate-50">${titulo}</h1>`
     html += "<p class=\"mt-2 text-slate-400\">Sección dinámica por género.</p>"
     html += "</div>"
+    html += "<div class=\"flex flex-wrap gap-3\">"
+    html += "<a href=\"/peliculas/nueva\" class=\"inline-flex items-center justify-center rounded-lg bg-amber-500 px-4 py-2 font-medium text-slate-950 hover:bg-amber-400\">Agregar película</a>"
     html += "<a href=\"/peliculas\" class=\"inline-flex items-center justify-center rounded-lg border border-slate-700 px-4 py-2 text-slate-300 hover:text-amber-400\">Volver al catálogo</a>"
-    html += "</div>"
+    html += "</div></div>"
 
     if (!peliculas.length) {
         html += "<p class=\"rounded-xl border border-slate-800 bg-slate-900 p-6 text-slate-400\">No hay películas disponibles en esta categoría.</p>"
