@@ -37,6 +37,14 @@ export async function getPeliculaById(id) {
     return pelicula
 }
 
+export async function getPeliculasByDirector(idDirector) {
+    const peliculas = await db.collection("peliculas").find({
+        directorId: new ObjectId(idDirector),
+        eliminado: { $ne: true }
+    }).toArray()
+    return peliculas
+}
+
 export async function savePelicula(pelicula) {
     await db.collection("peliculas").insertOne(pelicula)
     return pelicula

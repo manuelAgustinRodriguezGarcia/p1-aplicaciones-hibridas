@@ -1,4 +1,4 @@
-export function createPage(title, content) {
+export function createPage(title, content, anchoCompleto = false) {
     let html = ""
     html += '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">'
     html += '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
@@ -6,19 +6,33 @@ export function createPage(title, content) {
     html += '<script src="https://cdn.tailwindcss.com"></script>'
     html += "</head><body class=\"min-h-screen bg-slate-950 text-slate-50\">"
     html += "<header class=\"border-b border-slate-800 bg-slate-900\">"
-    html += "<nav class=\"mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4\">"
+    html += "<nav class=\"mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4\">"
     html += "<a href=\"/\" class=\"text-lg font-semibold text-amber-500\">Tomi Manu Movies</a>"
     html += "<div class=\"flex flex-wrap gap-4 text-sm text-slate-300\">"
     html += "<a href=\"/\" class=\"hover:text-amber-400\">Inicio</a>"
     html += "<a href=\"/peliculas\" class=\"hover:text-amber-400\">Películas</a>"
     html += "<a href=\"/directores\" class=\"hover:text-amber-400\">Directores</a>"
-    html += "<a href=\"/peliculas/nueva\" class=\"hover:text-amber-400\">Agregar</a>"
+    html += "<a href=\"/peliculas\" class=\"hover:text-amber-400\">Administrar</a>"
     html += "</div></nav></header>"
-    html += "<main class=\"mx-auto max-w-7xl px-4 py-8\">"
-    html += content
-    html += "</main>"
+    if (anchoCompleto) {
+        html += content
+    } else {
+        html += "<main class=\"mx-auto max-w-7xl px-4 py-8\">"
+        html += content
+        html += "</main>"
+    }
     html += "<footer class=\"border-t border-slate-800 bg-slate-900\">"
     html += "<div class=\"mx-auto max-w-7xl px-4 py-6 text-sm text-slate-400\">Tomi Manu Movies</div>"
     html += "</footer></body></html>"
     return html
+}
+
+export function pagina404() {
+    let html = ""
+    html += "<div class=\"rounded-xl border border-slate-800 bg-slate-900 p-8\">"
+    html += "<h1 class=\"text-2xl font-semibold text-slate-50\">Página no encontrada</h1>"
+    html += "<p class=\"mt-3 text-slate-400\">El recurso que buscás no existe o el identificador no es válido.</p>"
+    html += "<a href=\"/\" class=\"mt-6 inline-block text-amber-500 hover:text-amber-400\">Volver al inicio</a>"
+    html += "</div>"
+    return createPage("No encontrada", html)
 }
