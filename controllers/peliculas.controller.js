@@ -6,16 +6,8 @@ import * as peliculasView from "../views/peliculas.views.js"
 const generosValidos = ["accion", "comedia", "drama", "terror", "ciencia-ficcion"]
 const OTRO_DIRECTOR = "otro"
 
-function campoVacio(valor) {
-    return !valor || String(valor).trim() === ""
-}
-
-function idValido(id) {
-    return typeof id === "string" && /^[a-fA-F0-9]{24}$/.test(id)
-}
-
 async function obtenerDirector(directorId) {
-    if (!directorId || !idValido(String(directorId))) {
+    if (!directorId) {
         return null
     }
     try {
@@ -27,18 +19,12 @@ async function obtenerDirector(directorId) {
 
 async function resolverDirectorId(body) {
     if (body.directorId === OTRO_DIRECTOR) {
-        if (campoVacio(body.directorName)) {
-            throw new Error("Ingresá el nombre del director.")
-        }
         const guardado = await directoresService.saveDirector({
-            name: String(body.directorName).trim(),
+            name: body.directorName,
             photo: "https://placehold.co/400x400/1e293b/94a3b8?text=Director",
             description: "Sin descripción.",
         })
         return guardado._id
-    }
-    if (!idValido(body.directorId)) {
-        throw new Error("Seleccioná un director válido.")
     }
     return new ObjectId(body.directorId)
 }
@@ -46,12 +32,12 @@ async function resolverDirectorId(body) {
 async function datosPeliculaDesdeBody(body) {
     const directorId = await resolverDirectorId(body)
     return {
-        title: String(body.title).trim(),
-        description: String(body.description).trim(),
-        image: String(body.image).trim(),
+        title: body.title,
+        description: body.description,
+        image: body.image,
         year: Number(body.year),
         genre: body.genre,
-        trailer: String(body.trailer).trim(),
+        trailer: body.trailer,
         directorId,
     }
 }
@@ -94,10 +80,7 @@ export async function getPeliculasPorGenero(req, res) {
 
 export async function getPeliculaById(req, res) {
     try {
-        const id = req.params?.id
-        if (!idValido(id)) {
-            return res.status(404).send(peliculasView.pagina404())
-        }
+        const id = req.params.id
         const pelicula = await peliculasService.getPeliculaById(id)
         if (!pelicula || pelicula.eliminado === true) {
             return res.status(404).send(peliculasView.pagina404())
@@ -130,10 +113,7 @@ export async function savePelicula(req, res) {
 
 export async function formularioEditarPelicula(req, res) {
     try {
-        const id = req.params?.id
-        if (!idValido(id)) {
-            return res.status(404).send(peliculasView.pagina404())
-        }
+        const id = req.params.id
         const pelicula = await peliculasService.getPeliculaById(id)
         if (!pelicula || pelicula.eliminado === true) {
             return res.status(404).send(peliculasView.pagina404())
@@ -147,10 +127,7 @@ export async function formularioEditarPelicula(req, res) {
 
 export async function updatePelicula(req, res) {
     try {
-        const id = req.params?.id
-        if (!idValido(id)) {
-            return res.status(404).send(peliculasView.pagina404())
-        }
+        const id = req.params.id
         const datos = await datosPeliculaDesdeBody(req.body)
         await peliculasService.updatePelicula(id, datos)
         const pelicula = await peliculasService.getPeliculaById(id)
@@ -163,10 +140,7 @@ export async function updatePelicula(req, res) {
 
 export async function formularioBorrarPelicula(req, res) {
     try {
-        const id = req.params?.id
-        if (!idValido(id)) {
-            return res.status(404).send(peliculasView.pagina404())
-        }
+        const id = req.params.id
         const pelicula = await peliculasService.getPeliculaById(id)
         if (!pelicula || pelicula.eliminado === true) {
             return res.status(404).send(peliculasView.pagina404())
@@ -179,10 +153,7 @@ export async function formularioBorrarPelicula(req, res) {
 
 export async function deletePelicula(req, res) {
     try {
-        const id = req.params?.id
-        if (!idValido(id)) {
-            return res.status(404).send(peliculasView.pagina404())
-        }
+        const id = req.params.id
         await peliculasService.deletePeliculaLogico(id)
         res.redirect("/peliculas/administrar")
     } catch (error) {
