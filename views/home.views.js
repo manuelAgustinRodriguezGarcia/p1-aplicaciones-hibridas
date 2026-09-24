@@ -77,9 +77,9 @@ export function home(peliculas = [], directores = [], paginacion = {}) {
     let html = ""
     html += "<main>"
     html += "<section class=\"relative z-20 overflow-hidden border-b border-slate-800/80 bg-slate-950\">"
-    html += "<img src=\"https://static.vecteezy.com/system/resources/previews/004/243/196/non_2x/cinema-concept-horizontal-banner-with-copy-space-vector.jpg\" alt=\"\" class=\"pointer-events-none absolute inset-0 h-full w-full object-cover opacity-35\" aria-hidden=\"true\">"
-    html += "<div class=\"absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/75 to-slate-950/60\"></div>"
-    html += "<div class=\"relative z-10 mx-auto flex min-h-[26rem] max-w-7xl items-center px-4 py-20 sm:min-h-[28rem] sm:px-6\">"
+    html += "<img src=\"/banner/banner.png\" alt=\"\" class=\"pointer-events-none block h-auto w-full opacity-35\" aria-hidden=\"true\">"
+    html += "<div class=\"absolute inset-0 bg-gradient-to-r from-slate-950/60 via-slate-950/35 to-slate-950/20\"></div>"
+    html += "<div class=\"absolute inset-0 z-10 mx-auto flex max-w-7xl items-center px-4 py-20 sm:px-6\">"
     html += "<div class=\"max-w-2xl\">"
     html += `<p class="mb-3 ${ui.kicker}">Tomi Manu Movies</p>`
     html += "<h1 class=\"font-serif text-3xl font-bold text-slate-50 sm:text-5xl\">Tu próxima película te está esperando.</h1>"
