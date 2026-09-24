@@ -8,11 +8,11 @@ const db = client.db("AH20232CP1")
 export async function getPeliculas(filtros = {}) {
     const filter = { eliminado: { $ne: true } }
 
-    if (filtros?.genre) {
+    if (filtros.genre) {
         filter.genre = filtros.genre
     }
 
-    if (filtros?.year) {
+    if (filtros.year) {
         filter.year = Number(filtros.year)
     }
 
@@ -24,7 +24,7 @@ export async function getAniosDisponibles() {
     const peliculas = await db.collection("peliculas").find({ eliminado: { $ne: true } }).toArray()
     const anios = []
     peliculas.forEach((pelicula) => {
-        if (pelicula.year !== undefined && pelicula.year !== null && !anios.includes(pelicula.year)) {
+        if (!anios.includes(pelicula.year)) {
             anios.push(pelicula.year)
         }
     })

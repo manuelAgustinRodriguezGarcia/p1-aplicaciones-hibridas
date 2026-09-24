@@ -60,26 +60,23 @@ export function detalleDirector(director, peliculas = []) {
     return createPage(director.name, html)
 }
 
-export function formularioNuevoDirector(error = "", valores = {}) {
+export function formularioNuevoDirector() {
     let html = ""
     html += "<div class=\"mx-auto max-w-2xl\">"
     html += "<h1 class=\"mb-2 text-3xl font-semibold text-slate-50\">Agregar director</h1>"
     html += "<p class=\"mb-8 text-slate-400\">Completá los datos para sumarlo al catálogo.</p>"
-    if (error) {
-        html += `<p class="mb-6 rounded-xl border border-slate-800 bg-slate-900 p-4 text-amber-500">${error}</p>`
-    }
     html += "<form action=\"/directores/nuevo\" method=\"POST\" class=\"space-y-5 rounded-xl border border-slate-800 bg-slate-900 p-6\">"
     html += "<div>"
     html += "<label class=\"mb-2 block text-sm text-slate-300\">Nombre</label>"
-    html += `<input name="name" value="${valores.name || ""}" required class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500">`
+    html += `<input name="name" value="" required class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500">`
     html += "</div>"
     html += "<div>"
     html += "<label class=\"mb-2 block text-sm text-slate-300\">URL de la foto</label>"
-    html += `<input name="photo" type="url" value="${valores.photo || ""}" required class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500">`
+    html += `<input name="photo" type="url" value="" required class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500">`
     html += "</div>"
     html += "<div>"
     html += "<label class=\"mb-2 block text-sm text-slate-300\">Descripción</label>"
-    html += `<textarea name="description" rows="4" required class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500">${valores.description || ""}</textarea>`
+    html += `<textarea name="description" rows="4" required class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500"></textarea>`
     html += "</div>"
     html += "<button type=\"submit\" class=\"w-full rounded-lg bg-amber-500 px-4 py-2 font-medium text-slate-950 hover:bg-amber-400\">Guardar director</button>"
     html += "</form>"

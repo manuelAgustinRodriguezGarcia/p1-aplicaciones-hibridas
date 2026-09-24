@@ -17,7 +17,7 @@ const generosOpciones = [
 ]
 
 function etiquetaGenero(genero) {
-    return generosEtiqueta[genero] || genero
+    return generosEtiqueta[genero]
 }
 
 function opcionesGenero(seleccionado) {
@@ -48,7 +48,7 @@ function opcionesDirector(directores, seleccionado) {
     return html
 }
 
-export function movieCards(peliculas, mostrarAcciones = true) {
+export function movieCards(peliculas) {
     let html = ""
     html += "<div class=\"grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5\">"
     peliculas.forEach((pelicula) => {
@@ -60,12 +60,6 @@ export function movieCards(peliculas, mostrarAcciones = true) {
         html += `<p class="mt-1 text-xs text-amber-500">${etiquetaGenero(pelicula.genre)}</p>`
         html += `<p class="mt-1 text-xs text-slate-400">${pelicula.year}</p>`
         html += "</div></a>"
-        if (mostrarAcciones) {
-            html += "<div class=\"flex gap-2 border-t border-slate-800 p-3\">"
-            html += `<a href="/peliculas/editar/${pelicula._id}" class="flex-1 rounded-lg bg-amber-500 px-2 py-1.5 text-center text-xs font-medium text-slate-950 hover:bg-amber-400">Editar</a>`
-            html += `<a href="/peliculas/borrar/${pelicula._id}" class="flex-1 rounded-lg bg-red-600 px-2 py-1.5 text-center text-xs font-medium text-slate-50 hover:bg-red-500">Eliminar</a>`
-            html += "</div>"
-        }
         html += "</div>"
     })
     html += "</div>"
@@ -98,12 +92,9 @@ function formularioFiltros(filtros = {}, anios = []) {
 
 export function listaPeliculas(peliculas, filtros = {}, anios = []) {
     let html = ""
-    html += "<div class=\"mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between\">"
-    html += "<div>"
+    html += "<div class=\"mb-8\">"
     html += "<h1 class=\"text-3xl font-semibold text-slate-50\">Películas</h1>"
     html += "<p class=\"mt-2 text-slate-400\">Explorá el catálogo completo.</p>"
-    html += "</div>"
-    html += "<a href=\"/peliculas/nueva\" class=\"inline-flex items-center justify-center rounded-lg bg-amber-500 px-4 py-2 font-medium text-slate-950 hover:bg-amber-400\">Agregar película</a>"
     html += "</div>"
     html += formularioFiltros(filtros, anios)
 
@@ -119,6 +110,49 @@ export function listaPeliculas(peliculas, filtros = {}, anios = []) {
     return createPage("Películas", html)
 }
 
+export function panelAdministrar(peliculas) {
+    let html = ""
+    html += "<div class=\"mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between\">"
+    html += "<div>"
+    html += "<h1 class=\"text-3xl font-semibold text-slate-50\">Administrar</h1>"
+    html += "<p class=\"mt-2 text-slate-400\">Editá o eliminá películas del catálogo.</p>"
+    html += "</div>"
+    html += "<a href=\"/peliculas/nueva\" class=\"inline-flex items-center justify-center rounded-lg bg-amber-500 px-4 py-2 font-medium text-slate-950 hover:bg-amber-400\">Agregar película</a>"
+    html += "</div>"
+
+    if (!peliculas.length) {
+        html += "<p class=\"rounded-xl border border-slate-800 bg-slate-900 p-6 text-slate-400\">No hay películas disponibles.</p>"
+        return createPage("Administrar", html)
+    }
+
+    html += "<div class=\"overflow-x-auto rounded-xl border border-slate-800 bg-slate-900\">"
+    html += "<table class=\"w-full text-left text-sm\">"
+    html += "<thead class=\"border-b border-slate-800 bg-slate-950 text-slate-300\">"
+    html += "<tr>"
+    html += "<th class=\"px-4 py-3 font-medium\">Póster</th>"
+    html += "<th class=\"px-4 py-3 font-medium\">Título</th>"
+    html += "<th class=\"px-4 py-3 font-medium\">Género</th>"
+    html += "<th class=\"px-4 py-3 font-medium\">Año</th>"
+    html += "<th class=\"px-4 py-3 font-medium\">Acciones</th>"
+    html += "</tr></thead><tbody>"
+
+    peliculas.forEach((pelicula) => {
+        html += "<tr class=\"border-b border-slate-800 last:border-0\">"
+        html += `<td class="px-4 py-3"><img src="${pelicula.image}" alt="${pelicula.title}" class="h-16 w-11 rounded object-cover"></td>`
+        html += `<td class="px-4 py-3 font-medium text-slate-50">${pelicula.title}</td>`
+        html += `<td class="px-4 py-3 text-amber-500">${etiquetaGenero(pelicula.genre)}</td>`
+        html += `<td class="px-4 py-3 text-slate-400">${pelicula.year}</td>`
+        html += "<td class=\"px-4 py-3\">"
+        html += "<div class=\"flex flex-wrap gap-2\">"
+        html += `<a href="/peliculas/editar/${pelicula._id}" class="rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-medium text-slate-950 hover:bg-amber-400">Editar</a>`
+        html += `<a href="/peliculas/borrar/${pelicula._id}" class="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-medium text-slate-50 hover:bg-red-500">Eliminar</a>`
+        html += "</div></td></tr>"
+    })
+
+    html += "</tbody></table></div>"
+    return createPage("Administrar", html)
+}
+
 export function listaPeliculasPorGenero(peliculas, genero) {
     const titulo = `Películas de ${etiquetaGenero(genero)}`
     let html = ""
@@ -127,10 +161,8 @@ export function listaPeliculasPorGenero(peliculas, genero) {
     html += `<h1 class="text-3xl font-semibold text-slate-50">${titulo}</h1>`
     html += "<p class=\"mt-2 text-slate-400\">Sección dinámica por género.</p>"
     html += "</div>"
-    html += "<div class=\"flex flex-wrap gap-3\">"
-    html += "<a href=\"/peliculas/nueva\" class=\"inline-flex items-center justify-center rounded-lg bg-amber-500 px-4 py-2 font-medium text-slate-950 hover:bg-amber-400\">Agregar película</a>"
     html += "<a href=\"/peliculas\" class=\"inline-flex items-center justify-center rounded-lg border border-slate-700 px-4 py-2 text-slate-300 hover:text-amber-400\">Volver al catálogo</a>"
-    html += "</div></div>"
+    html += "</div>"
 
     if (!peliculas.length) {
         html += "<p class=\"rounded-xl border border-slate-800 bg-slate-900 p-6 text-slate-400\">No hay películas disponibles en esta categoría.</p>"
@@ -156,9 +188,7 @@ export function detallePelicula(pelicula, director = null) {
         html += "<p class=\"mt-3 text-slate-400\">Director: Sin director asignado</p>"
     }
     html += `<p class="mt-6 text-slate-400">${pelicula.description}</p>`
-    if (pelicula.trailer) {
-        html += `<a href="${pelicula.trailer}" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex rounded-lg bg-amber-500 px-4 py-2 font-medium text-slate-950 hover:bg-amber-400">Ver tráiler</a>`
-    }
+    html += `<a href="${pelicula.trailer}" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex rounded-lg bg-amber-500 px-4 py-2 font-medium text-slate-950 hover:bg-amber-400">Ver tráiler</a>`
     html += "<div class=\"mt-8 flex flex-wrap gap-3\">"
     html += `<a href="/peliculas/editar/${pelicula._id}" class="rounded-lg bg-amber-500 px-4 py-2 text-sm font-medium text-slate-950 hover:bg-amber-400">Editar</a>`
     html += `<a href="/peliculas/borrar/${pelicula._id}" class="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-slate-50 hover:bg-red-500">Eliminar</a>`
@@ -167,62 +197,56 @@ export function detallePelicula(pelicula, director = null) {
     return createPage(pelicula.title, html)
 }
 
-export function formularioNuevaPelicula(directores = [], error = "", valores = {}) {
+export function formularioNuevaPelicula(directores = []) {
     let html = ""
     html += "<div class=\"mx-auto max-w-2xl\">"
     html += "<h1 class=\"mb-2 text-3xl font-semibold text-slate-50\">Agregar película</h1>"
     html += "<p class=\"mb-8 text-slate-400\">Completá los datos para sumarla al catálogo.</p>"
-    if (error) {
-        html += `<p class="mb-6 rounded-xl border border-slate-800 bg-slate-900 p-4 text-amber-500">${error}</p>`
-    }
     html += "<form action=\"/peliculas/nueva\" method=\"POST\" class=\"space-y-5 rounded-xl border border-slate-800 bg-slate-900 p-6\">"
     html += "<div>"
     html += "<label class=\"mb-2 block text-sm text-slate-300\">Título</label>"
-    html += `<input name="title" value="${valores.title || ""}" required class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500">`
+    html += `<input name="title" value="" required class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500">`
     html += "</div>"
     html += "<div>"
     html += "<label class=\"mb-2 block text-sm text-slate-300\">Descripción</label>"
-    html += `<textarea name="description" rows="4" required class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500">${valores.description || ""}</textarea>`
+    html += `<textarea name="description" rows="4" required class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500"></textarea>`
     html += "</div>"
     html += "<div>"
     html += "<label class=\"mb-2 block text-sm text-slate-300\">URL del póster</label>"
-    html += `<input name="image" type="url" value="${valores.image || ""}" required class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500">`
+    html += `<input name="image" type="url" value="" required class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500">`
     html += "</div>"
     html += "<div>"
     html += "<label class=\"mb-2 block text-sm text-slate-300\">Año</label>"
-    html += `<input name="year" type="number" value="${valores.year || ""}" required class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500">`
+    html += `<input name="year" type="number" value="" required class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500">`
     html += "</div>"
     html += "<div>"
     html += "<label class=\"mb-2 block text-sm text-slate-300\">Género</label>"
     html += "<select name=\"genre\" required class=\"w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500\">"
-    html += opcionesGenero(valores.genre)
+    html += opcionesGenero()
     html += "</select>"
     html += "</div>"
     html += "<div>"
     html += "<label class=\"mb-2 block text-sm text-slate-300\">Director</label>"
     html += "<select name=\"directorId\" required class=\"w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500\">"
-    html += opcionesDirector(directores, valores.directorId)
+    html += opcionesDirector(directores)
     html += "</select>"
     html += "</div>"
     html += "<div>"
     html += "<label class=\"mb-2 block text-sm text-slate-300\">URL del tráiler</label>"
-    html += `<input name="trailer" type="url" value="${valores.trailer || ""}" required class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500">`
+    html += `<input name="trailer" type="url" value="" required class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500">`
     html += "</div>"
     html += "<button type=\"submit\" class=\"w-full rounded-lg bg-amber-500 px-4 py-2 font-medium text-slate-950 hover:bg-amber-400\">Guardar película</button>"
     html += "</form>"
-    html += "<a href=\"/peliculas\" class=\"mt-6 inline-block text-sm text-slate-400 hover:text-amber-400\">Volver al listado</a>"
+    html += "<a href=\"/peliculas/administrar\" class=\"mt-6 inline-block text-sm text-slate-400 hover:text-amber-400\">Volver al listado</a>"
     html += "</div>"
     return createPage("Agregar película", html)
 }
 
-export function formularioEditarPelicula(pelicula, directores = [], error = "") {
+export function formularioEditarPelicula(pelicula, directores = []) {
     let html = ""
     html += "<div class=\"mx-auto max-w-2xl\">"
     html += "<h1 class=\"mb-2 text-3xl font-semibold text-slate-50\">Editar película</h1>"
     html += "<p class=\"mb-8 text-slate-400\">Modificá los datos y guardá los cambios.</p>"
-    if (error) {
-        html += `<p class="mb-6 rounded-xl border border-slate-800 bg-slate-900 p-4 text-amber-500">${error}</p>`
-    }
     html += `<form action="/peliculas/editar/${pelicula._id}" method="POST" class="space-y-5 rounded-xl border border-slate-800 bg-slate-900 p-6">`
     html += "<div>"
     html += "<label class=\"mb-2 block text-sm text-slate-300\">Título</label>"
@@ -254,11 +278,11 @@ export function formularioEditarPelicula(pelicula, directores = [], error = "") 
     html += "</div>"
     html += "<div>"
     html += "<label class=\"mb-2 block text-sm text-slate-300\">URL del tráiler</label>"
-    html += `<input name="trailer" type="url" value="${pelicula.trailer || ""}" required class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500">`
+    html += `<input name="trailer" type="url" value="${pelicula.trailer}" required class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50 outline-none focus:border-amber-500">`
     html += "</div>"
     html += "<button type=\"submit\" class=\"w-full rounded-lg bg-amber-500 px-4 py-2 font-medium text-slate-950 hover:bg-amber-400\">Guardar cambios</button>"
     html += "</form>"
-    html += "<a href=\"/peliculas\" class=\"mt-6 inline-block text-sm text-slate-400 hover:text-amber-400\">Volver al listado</a>"
+    html += "<a href=\"/peliculas/administrar\" class=\"mt-6 inline-block text-sm text-slate-400 hover:text-amber-400\">Volver al listado</a>"
     html += "</div>"
     return createPage("Editar película", html)
 }
@@ -274,7 +298,7 @@ export function confirmacionBorrarPelicula(pelicula) {
     html += `<h2 class="text-xl font-semibold text-slate-50">${pelicula.title}</h2>`
     html += `<form action="/peliculas/borrar/${pelicula._id}" method="POST" class="mt-6 flex flex-wrap gap-3">`
     html += "<button type=\"submit\" class=\"rounded-lg bg-red-600 px-4 py-2 font-medium text-slate-50 hover:bg-red-500\">Eliminar</button>"
-    html += "<a href=\"/peliculas\" class=\"rounded-lg border border-slate-700 px-4 py-2 text-slate-300 hover:text-amber-400\">Cancelar</a>"
+    html += "<a href=\"/peliculas/administrar\" class=\"rounded-lg border border-slate-700 px-4 py-2 text-slate-300 hover:text-amber-400\">Cancelar</a>"
     html += "</form>"
     html += "</div></div></div>"
     return createPage("Eliminar película", html)

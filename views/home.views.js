@@ -46,7 +46,7 @@ export function home(peliculas = [], directores = []) {
     if (!peliculas.length) {
         html += "<p class=\"rounded-xl border border-slate-800 bg-slate-900 p-6 text-slate-400\">No hay películas disponibles.</p>"
     } else {
-        html += movieCards(peliculas, false)
+        html += movieCards(peliculas)
     }
     html += "</section>"
 
@@ -69,7 +69,7 @@ export function home(peliculas = [], directores = []) {
     html += "<h2 class=\"text-2xl font-semibold text-slate-50\">Administración</h2>"
     html += "<p class=\"mt-2 text-slate-400\">Acceso al ABM de películas y al alta de directores.</p>"
     html += "<div class=\"mt-8 grid gap-4 sm:grid-cols-3\">"
-    html += "<a href=\"/peliculas\" class=\"rounded-xl border border-slate-800 bg-slate-900 p-6 hover:border-amber-500\"><h3 class=\"font-semibold text-amber-500\">Administrar películas</h3><p class=\"mt-2 text-sm text-slate-400\">Listado, edición y eliminación.</p></a>"
+    html += "<a href=\"/peliculas/administrar\" class=\"rounded-xl border border-slate-800 bg-slate-900 p-6 hover:border-amber-500\"><h3 class=\"font-semibold text-amber-500\">Administrar películas</h3><p class=\"mt-2 text-sm text-slate-400\">Listado, edición y eliminación.</p></a>"
     html += "<a href=\"/peliculas/nueva\" class=\"rounded-xl border border-slate-800 bg-slate-900 p-6 hover:border-amber-500\"><h3 class=\"font-semibold text-amber-500\">Agregar película</h3><p class=\"mt-2 text-sm text-slate-400\">Cargar un nuevo título.</p></a>"
     html += "<a href=\"/directores/nuevo\" class=\"rounded-xl border border-slate-800 bg-slate-900 p-6 hover:border-amber-500\"><h3 class=\"font-semibold text-amber-500\">Agregar director</h3><p class=\"mt-2 text-sm text-slate-400\">Cargar un nuevo director.</p></a>"
     html += "</div></section>"

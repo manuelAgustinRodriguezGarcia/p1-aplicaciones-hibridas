@@ -4,6 +4,7 @@ import * as peliculasController from "../controllers/peliculas.controller.js"
 const router = Router()
 
 router.get("/peliculas", peliculasController.getPeliculas)
+router.get("/peliculas/administrar", peliculasController.getAdministrar)
 router.get("/peliculas/nueva", peliculasController.formularioNuevaPelicula)
 router.post("/peliculas/nueva", peliculasController.savePelicula)
 router.get("/peliculas/editar/:id", peliculasController.formularioEditarPelicula)

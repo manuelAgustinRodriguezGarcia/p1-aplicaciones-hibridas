@@ -18,7 +18,7 @@ export function createPage(title, content, anchoCompleto = false) {
     html += "<a href=\"/\" class=\"hover:text-amber-400\">Inicio</a>"
     html += "<a href=\"/peliculas\" class=\"hover:text-amber-400\">Películas</a>"
     html += "<a href=\"/directores\" class=\"hover:text-amber-400\">Directores</a>"
-    html += "<a href=\"/peliculas\" class=\"hover:text-amber-400\">Administrar</a>"
+    html += "<a href=\"/peliculas/administrar\" class=\"hover:text-amber-400\">Administrar</a>"
     html += "</div></nav></header>"
     if (anchoCompleto) {
         html += `<div class="relative z-10">${content}</div>`
