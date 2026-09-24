@@ -46,8 +46,8 @@ export async function getPeliculasByDirector(idDirector) {
 }
 
 export async function savePelicula(pelicula) {
-    await db.collection("peliculas").insertOne(pelicula)
-    return pelicula
+    const result = await db.collection("peliculas").insertOne(pelicula)
+    return { ...pelicula, _id: result.insertedId }
 }
 
 export async function updatePelicula(id, pelicula) {

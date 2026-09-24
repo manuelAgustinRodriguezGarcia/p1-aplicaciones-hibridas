@@ -16,6 +16,13 @@ export async function getDirectorById(id) {
 }
 
 export async function saveDirector(director) {
-    await db.collection("directores").insertOne(director)
-    return director
+    const result = await db.collection("directores").insertOne(director)
+    return { ...director, _id: result.insertedId }
+}
+
+export async function updateDirector(id, datos) {
+    await db.collection("directores").updateOne(
+        { _id: new ObjectId(id) },
+        { $set: datos }
+    )
 }
